@@ -1,5 +1,4 @@
 import streamlit as st
-import time
 
 # --- App Configuration ---
 st.set_page_config(
@@ -40,8 +39,7 @@ if page == "🏠 Dashboard":
     for category, apps in app_hubs.items():
         with st.expander(f"🔹 {category}"):
             st.write(", ".join(apps))
-            if st.button(f"➕ Manage {category}"):
-                st.success(f"🔧 Managing {category}...")
+            st.button(f"➕ Manage {category}")
 
 # --- Discover Apps Page ---
 elif page == "🔍 Discover Apps":
@@ -68,7 +66,6 @@ elif page == "📂 Manage Hubs":
         if hub_name:
             app_hubs[hub_name] = []
             st.success(f"✅ Created new App Hub: **{hub_name}**")
-            time.sleep(1)  # Simulate app refresh
         else:
             st.warning("⚠️ Please enter a valid hub name.")
 
@@ -80,7 +77,6 @@ elif page == "📂 Manage Hubs":
             if st.button(f"➕ Add to {hub}", key=f"btn_{hub}") and add_app:
                 app_hubs[hub].append(add_app)
                 st.success(f"✅ Added **{add_app}** to **{hub}**")
-                time.sleep(1)  # Simulate refresh
 
 # --- Settings Page ---
 elif page == "⚙️ Settings":
