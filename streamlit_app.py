@@ -1,15 +1,5 @@
 import streamlit as st
-import firebase_admin
-from firebase_admin import credentials, firestore
 import time
-
-# --- Firebase Initialization ---
-try:
-    cred = credentials.Certificate("path/to/firebase_credentials.json")  # Replace with actual path
-    firebase_admin.initialize_app(cred)
-    db = firestore.client()
-except Exception:
-    db = None  # If Firebase is not set up, mock database functionality
 
 # --- App Configuration ---
 st.set_page_config(
