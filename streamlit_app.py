@@ -7,22 +7,23 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# --- Initialize Session State for App Hubs (Persistent Data) ---
+if "app_hubs" not in st.session_state:
+    st.session_state.app_hubs = {
+        "📌 Productivity": ["Notion", "Evernote", "Trello", "Google Keep", "Slack"],
+        "💬 Social Media": ["Instagram", "Twitter", "Snapchat", "Reddit", "LinkedIn"],
+        "💪 Fitness & Health": ["MyFitnessPal", "Strava", "Nike Training Club", "Headspace", "Fitbit"],
+        "🎬 Entertainment": ["Netflix", "Spotify", "YouTube", "Twitch", "HBO Max"],
+        "💰 Finance & Investing": ["Robinhood", "Mint", "Venmo", "PayPal", "Acorns"],
+        "🤖 AI & Tech Tools": ["ChatGPT", "DALL·E", "Google Bard", "Midjourney", "Synthesia"],
+        "🚀 Business & Work": ["Zoom", "Microsoft Teams", "Google Drive", "Dropbox", "Calendly"],
+    }
+
 # --- Sidebar Navigation ---
 st.sidebar.title("📌 App Caddy")
 page = st.sidebar.radio(
     "Navigation", ["🏠 Dashboard", "🔍 Discover Apps", "📂 Manage Hubs", "⚙️ Settings"]
 )
-
-# --- Pre-Filled App Hubs (Demo Data) ---
-app_hubs = {
-    "📌 Productivity": ["Notion", "Evernote", "Trello", "Google Keep", "Slack"],
-    "💬 Social Media": ["Instagram", "Twitter", "Snapchat", "Reddit", "LinkedIn"],
-    "💪 Fitness & Health": ["MyFitnessPal", "Strava", "Nike Training Club", "Headspace", "Fitbit"],
-    "🎬 Entertainment": ["Netflix", "Spotify", "YouTube", "Twitch", "HBO Max"],
-    "💰 Finance & Investing": ["Robinhood", "Mint", "Venmo", "PayPal", "Acorns"],
-    "🤖 AI & Tech Tools": ["ChatGPT", "DALL·E", "Google Bard", "Midjourney", "Synthesia"],
-    "🚀 Business & Work": ["Zoom", "Microsoft Teams", "Google Drive", "Dropbox", "Calendly"],
-}
 
 # --- Expanded Demo App List for Discovery ---
 recommended_apps = [
@@ -36,7 +37,7 @@ if page == "🏠 Dashboard":
     st.title("📱 Your App Hubs")
     st.markdown("Easily manage and organize your favorite apps into **smart hubs**!")
 
-    for category, apps in app_hubs.items():
+    for category, apps in st.session_state.app_hubs.items():
         with st.expander(f"🔹 {category}"):
             st.write(", ".join(apps))
             st.button(f"➕ Manage {category}")
@@ -63,19 +64,21 @@ elif page == "📂 Manage Hubs":
     hub_name = st.text_input("🆕 Create a new App Hub")
 
     if st.button("➕ Create Hub"):
-        if hub_name:
-            app_hubs[hub_name] = []
+        if hub_name and hub_name not in st.session_state.app_hubs:
+            st.session_state.app_hubs[hub_name] = []
             st.success(f"✅ Created new App Hub: **{hub_name}**")
+        elif hub_name in st.session_state.app_hubs:
+            st.warning("⚠️ This hub already exists.")
         else:
             st.warning("⚠️ Please enter a valid hub name.")
 
     st.subheader("📌 Your App Hubs")
-    for hub, apps in app_hubs.items():
+    for hub, apps in st.session_state.app_hubs.items():
         with st.expander(f"🔹 {hub} ({len(apps)} apps)"):
             st.write(", ".join(apps) if apps else "No apps added yet.")
             add_app = st.text_input(f"📲 Add an app to {hub}", key=hub)
             if st.button(f"➕ Add to {hub}", key=f"btn_{hub}") and add_app:
-                app_hubs[hub].append(add_app)
+                st.session_state.app_hubs[hub].append(add_app)
                 st.success(f"✅ Added **{add_app}** to **{hub}**")
 
 # --- Settings Page ---
