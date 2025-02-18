@@ -14,13 +14,23 @@ page = st.sidebar.radio(
     "Navigation", ["🏠 Dashboard", "🔍 Discover Apps", "📂 Manage Hubs", "⚙️ Settings"]
 )
 
-# --- Sample App Hubs Data (Mock Data) ---
+# --- Pre-Filled App Hubs (Demo Data) ---
 app_hubs = {
-    "📌 Productivity": ["Notion", "Evernote", "Trello"],
-    "💬 Social Media": ["Instagram", "Twitter", "Snapchat"],
-    "💪 Fitness": ["MyFitnessPal", "Strava", "Nike Training Club"],
-    "🎬 Entertainment": ["Netflix", "Spotify", "Twitch"],
+    "📌 Productivity": ["Notion", "Evernote", "Trello", "Google Keep", "Slack"],
+    "💬 Social Media": ["Instagram", "Twitter", "Snapchat", "Reddit", "LinkedIn"],
+    "💪 Fitness & Health": ["MyFitnessPal", "Strava", "Nike Training Club", "Headspace", "Fitbit"],
+    "🎬 Entertainment": ["Netflix", "Spotify", "YouTube", "Twitch", "HBO Max"],
+    "💰 Finance & Investing": ["Robinhood", "Mint", "Venmo", "PayPal", "Acorns"],
+    "🤖 AI & Tech Tools": ["ChatGPT", "DALL·E", "Google Bard", "Midjourney", "Synthesia"],
+    "🚀 Business & Work": ["Zoom", "Microsoft Teams", "Google Drive", "Dropbox", "Calendly"],
 }
+
+# --- Expanded Demo App List for Discovery ---
+recommended_apps = [
+    "Asana", "Duolingo", "Clubhouse", "Calm", "Google Keep", "Airbnb", "Amazon",
+    "Discord", "Telegram", "Waze", "Uber", "Lyft", "Zillow", "Coinbase", "Crypto.com",
+    "Figma", "Canva", "Adobe Photoshop", "Todoist", "Monday.com", "Salesforce"
+]
 
 # --- Dashboard Page ---
 if page == "🏠 Dashboard":
@@ -37,7 +47,6 @@ if page == "🏠 Dashboard":
 elif page == "🔍 Discover Apps":
     st.title("🔍 Discover New Apps")
     search_query = st.text_input("🔎 Search for apps...")
-    recommended_apps = ["Asana", "Duolingo", "Clubhouse", "Calm", "Google Keep"]
 
     if search_query:
         st.write(f"🎯 Showing results for: **{search_query}**")
